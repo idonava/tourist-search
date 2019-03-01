@@ -1,0 +1,29 @@
+.Search {
+  height: 30px;
+  width: -webkit-fill-available;
+  padding: 5px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+}
+
+.Search-input {
+  display: inline-block;
+  height: 100%;
+  width: calc(100% - 130px);
+  margin: 5px;
+}
+
+.Search-input-text {
+  height: 100%;
+  width: 100%;
+  font-size: medium;
+  padding-left: 7px;
+}
+
+.Search-button {
+  height: 34px;
+  width: 105px;
+  margin: 5px;
+  font-size: medium;
+  font-weight: 500;
+}

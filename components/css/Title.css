@@ -1,0 +1,43 @@
+.Title-header {
+  background-color: #222;
+  height: 100px;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+.Title-text {
+  font-size: 38px;
+  color: #fff;
+  text-align: center;
+}
+
+@media (max-width: 1150px) {
+  .Title-header {
+    height: 40px;
+  }
+
+  .Title-text {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 800px) {
+  .Title-header {
+    height: 30px;
+  }
+
+  .Title-text {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 450px) {
+  .Title-header {
+    height: 25px;
+  }
+
+  .Title-text {
+    font-size: 20px;
+  }
+}

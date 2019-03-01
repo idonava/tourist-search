@@ -1,11 +1,12 @@
 import Layout from '../components/MyLayout.js'
 import Link from 'next/link'
+import Title from '../components/Title'
 
-function getPosts () {
+function getPosts() {
   return [
-    { id: 'hello-nextjs', title: 'Hello Next.js'},
-    { id: 'learn-nextjs', title: 'Learn Next.js is awesome'},
-    { id: 'deploy-nextjs', title: 'Deploy apps with ZEIT'},
+    { id: 'hello-nextjs', title: 'Hello Next.js' },
+    { id: 'learn-nextjs', title: 'Learn Next.js is awesome' },
+    { id: 'deploy-nextjs', title: 'Deploy apps with ZEIT' },
   ]
 }
 
@@ -18,14 +19,15 @@ const PostLink = ({ post }) => (
 )
 
 export default () => (
-  <Layout>
-    <h1>My Blog</h1>
-    <ul>
-      {getPosts().map((post) => (
-        <PostLink key={post.id} post={post}/>
-      ))}
-    </ul>
-    <style jsx>{`
+  <div>      <Title></Title>
+    <Layout>
+      <h1>Tourist Search Engine</h1>
+      <ul>
+        {getPosts().map((post) => (
+          <PostLink key={post.id} post={post} />
+        ))}
+      </ul>
+      <style jsx>{`
       h1, a {
         font-family: "Arial";
       }
@@ -48,5 +50,6 @@ export default () => (
         opacity: 0.6;
       }
     `}</style>
-  </Layout>
+    </Layout>
+  </div>
 )

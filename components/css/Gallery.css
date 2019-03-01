@@ -1,0 +1,19 @@
+.Gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1rem -1rem;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@supports (display: grid) {
+  .Gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 150px);
+    grid-gap: 2rem;
+  }
+
+  .Gallery {
+    margin: 0;
+  }
+}

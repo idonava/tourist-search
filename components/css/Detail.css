@@ -1,0 +1,29 @@
+.DetailImageTitle {
+  background-color: black;
+  color: ghostwhite;
+  margin-left: 10px;
+  margin-right: 30px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.DetailImageTitle:hover {
+  background-color: ghostwhite;
+  color: black;
+}
+
+.DetailImageTitle:active {
+  background-color: black;
+}
+
+.DetailImageTitleText {
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  border-color: white;
+  border-style: double;
+}
+
+.DetailImageTitleOwner {
+  font-weight: lighter;
+}

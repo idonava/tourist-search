@@ -1,0 +1,30 @@
+.GalleryPagination {
+  width: 100%;
+  text-align: right;
+  padding-bottom: 15px;
+}
+
+.GalleryPaginationButton {
+  font-size: 15px;
+  color: black;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 6px;
+  width: 100px;
+  height: 30px;
+  margin-right: 15px;
+}
+
+.GalleryPaginationButton:hover {
+  background-color: black;
+  color: white;
+}
+
+.GalleryPaginationButton:disabled {
+  display: none;
+}
+
+.GalleryPaginationText {
+  text-align: center;
+  margin-right: 8px;
+}

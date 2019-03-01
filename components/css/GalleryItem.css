@@ -1,0 +1,24 @@
+.GalleryItem {
+  flex: 1 0 24rem;
+  margin: 1rem;
+  box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.GalleryImage {
+  display: block;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  transition: transform 400ms ease-out;
+}
+
+.GalleryImage:hover {
+  transform: scale(1.15);
+}
+
+@supports (display: grid) {
+  .GalleryItem {
+    margin: 0;
+  }
+}
