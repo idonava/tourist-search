@@ -1,7 +1,8 @@
-import Header from './Header'
 import Search from './Search'
 import Gallery from './Gallery'
 import Detail from './Detail';
+import Title from './Title'
+
 import configureStore from '../config/store';
 import { Provider } from 'react-redux';
 
@@ -14,15 +15,15 @@ const layoutStyle = {
 }
 
 const Layout = (props) => (
-  <Provider store={store}>
 
-  <div style={layoutStyle}>
-    <Header />
-    <Search />
-    <Gallery />
-    <Detail />
-    {/* {props.children} */}
-  </div>
+  <Provider store={store}>
+    <Title></Title>
+    <div style={layoutStyle}>
+      <Search />
+      <Gallery />
+      <Detail />
+      {/* {props.children} */}
+    </div>
   </Provider>
 
 )

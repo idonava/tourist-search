@@ -1,4 +1,5 @@
 const auth  = require('./auth/index.js')
+const db = require('./db')
 
 const express = require('express')
 const next = require('next')
@@ -11,6 +12,7 @@ app.prepare()
 .then(() => {
   const server = express()
   server.use('/auth', auth);
+  server.use('/db', db);
   
   server.get('/p/:id', (req, res) => {
     const actualPage = '/auth'

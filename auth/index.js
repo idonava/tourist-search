@@ -1,6 +1,8 @@
 const express = require('express');
-const bodyParser= require('body-parser');
+const bodyParser = require('body-parser');
+const User = require('../db/models/user')
 const router = express.Router();
+
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
 
@@ -9,29 +11,22 @@ router.get('/', (req, res) => {
         message: 'lock'
     });
 });
-router.post('/signup', (req, res, next) => {
-    console.log(req.body);
-    if (validUser(req.body)) {
-        res.json({
-            message: 'Valid user - Needs to check in db for duplicate'
-        });
-    }
-    else {
-        next(new Error('Invalid user'))
-    }
-});
+router.post('/signup', User.signup);
+router.post('/signin', User.signin)
+router.post('/userFlickr', User.userFlickr)
 
-function validUser(user) {
-    console.log(user);
+// router.post('/signup', (req, res, next) => {
+//     console.log(req.body);
+//     if (validUser(req.body)) {
+//         res.json({
+//             message: 'Valid user - Needs to check in db for duplicate'
+//         });
+//     }
+//     else {
+//         next(new Error('Invalid user'))
+//     }
+// });
 
-    const validEmail = typeof user.email == 'string' &&
-        user.email.trim() != '';
-    const validPassword = typeof user.password == 'string' &&
-        user.password.trim() != '' &&
-        user.password.trim().length >= 6;
-
-    return validEmail && validPassword;
-}
 
 
 module.exports = router;

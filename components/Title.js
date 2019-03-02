@@ -1,13 +1,19 @@
 import React, { PureComponent } from 'react';
-
-import './css/Title.css';
+import Link from 'next/link'
+import 'materialize-css/dist/css/materialize.min.css';
 
 class Title extends PureComponent {
   render() {
     return (
-      <header className="Title-header">
-        <h1 className="Title-text">Tourist Search Engine</h1>
-      </header>
+      <nav>
+      <div className="nav-wrapper grey darken-4">
+        <a href="/" className="brand-logo">Tourist Search Engine</a>
+        <ul id="nav-mobile" className="right hide-on-med-and-down">
+          <li><Link href="/signin"><a>Sign In</a></Link></li>
+          <li><Link href="/signup"><a>Sign Up</a></Link></li>
+        </ul>
+      </div>
+    </nav>
     );
   }
 }
