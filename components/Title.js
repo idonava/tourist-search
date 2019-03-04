@@ -1,21 +1,23 @@
-import React, { PureComponent } from 'react';
 import Link from 'next/link'
 import 'materialize-css/dist/css/materialize.min.css';
 
-class Title extends PureComponent {
-  render() {
-    return (
-      <nav>
-      <div className="nav-wrapper grey darken-4">
-        <a href="/" className="brand-logo">Tourist Search Engine</a>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li><Link href="/signin"><a>Sign In</a></Link></li>
-          <li><Link href="/signup"><a>Sign Up</a></Link></li>
-        </ul>
-      </div>
-    </nav>
-    );
-  }
-}
-
-export default Title;
+export default ({ pathname, authenticated, query = false }) =>
+  <nav>
+    <div className="nav-wrapper grey darken-4">
+      <Link prefetch href="/">
+        <a className={pathname === "/" && "is-active" && "brand-logo"}>Tourist Search Engine</a>
+      </Link>
+      <ul id="nav-mobile" className="right hide-on-med-and-down">
+        {!authenticated && <li><Link prefetch href="/signin">
+          <a className={pathname === "/signin" && !query && "is-active"}>Sign In</a>
+        </Link></li>}
+        {!authenticated && <li><Link prefetch href="/signup">
+          <a className={pathname === "/signup" && !query && "is-active"}>Sign Up</a>
+        </Link></li>}
+        {authenticated && <li><Link prefetch href="/signout">
+          <a className={pathname === "/signout" && !query && "is-active"}>Sign Out</a>
+        </Link></li>}
+      </ul>
+    </div>
+  </nav>
+  ;

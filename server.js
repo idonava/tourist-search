@@ -1,4 +1,4 @@
-const auth  = require('./auth/index.js')
+const routing  = require('./routing/index.js')
 const db = require('./db')
 
 const express = require('express')
@@ -11,23 +11,18 @@ const handle = app.getRequestHandler()
 app.prepare()
 .then(() => {
   const server = express()
-  server.use('/auth', auth);
+  server.use('/routing', routing);
   server.use('/db', db);
-  
-  server.get('/p/:id', (req, res) => {
-    const actualPage = '/auth'
-    const queryParams = { id: req.params.id }
-    app.render(req, res, actualPage, queryParams)
-})
+
 
 
   server.get('*', (req, res) => {
     return handle(req, res)
   })
 
-  server.listen(3000, (err) => {
+  server.listen(3100, (err) => {
     if (err) throw err
-    console.log('> Ready on http://localhost:3000')
+    //console.log('> Ready on http://localhost:3100')
   })
 })
 .catch((ex) => {

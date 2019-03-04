@@ -1,30 +1,26 @@
-import Layout from '../components/MyLayout.js'
-import Link from 'next/link'
+import { Component } from "react";
+  import Link from 'next/link'
+import { isAuthenticated } from "../libs/auth";
+import Title from '../components/Title'
+import PropTypes from "prop-types";
+import 'materialize-css/dist/css/materialize.min.css';
 
-function getPosts() {
-  return [
-    { id: 'hello-nextjs', title: 'Hello Next.js' },
-    { id: 'learn-nextjs', title: 'Learn Next.js is awesome' },
-    { id: 'deploy-nextjs', title: 'Deploy apps with ZEIT' },
-  ]
+export default class Index extends Component {
+  static propTypes = {
+    authenticated: PropTypes.bool
+  };
+  static async getInitialProps(ctx) {
+    return {
+      authenticated: isAuthenticated(ctx)
+    };
+  }
+  render() {
+    const { authenticated, url } = this.props;
+    return (
+      <div>
+        <Title authenticated={authenticated} pathname={url.pathname}></Title>
+        <h1>Users</h1>
+      </div>
+    )
+  }
 }
-
-const PostLink = ({ post }) => (
-  <li>
-    <Link as={`/p/${post.id}`} href={`/post?title=${post.title}`}>
-      <a>{post.title}</a>
-    </Link>
-  </li>
-)
-
-export default () => (
-  <div>      
-    <Layout>
-      <ul>
-        {getPosts().map((post) => (
-          <PostLink key={post.id} post={post} />
-        ))}
-      </ul>
-    </Layout>
-  </div>
-)

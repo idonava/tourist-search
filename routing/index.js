@@ -11,12 +11,14 @@ router.get('/', (req, res) => {
         message: 'lock'
     });
 });
-router.post('/signup', User.signup);
-router.post('/signin', User.signin)
-router.post('/userFlickr', User.userFlickr)
+router.post('/auth/signup', User.signup);
+router.post('/auth/signin', User.signin)
+router.post('/addsearch', User.addSearch)
+router.post('/getuser', User.getUserByToken)
+
 
 // router.post('/signup', (req, res, next) => {
-//     console.log(req.body);
+//     //console.log(req.body);
 //     if (validUser(req.body)) {
 //         res.json({
 //             message: 'Valid user - Needs to check in db for duplicate'

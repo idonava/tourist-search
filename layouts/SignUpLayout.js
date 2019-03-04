@@ -8,8 +8,7 @@ const store = configureStore();
 const SignUpLayout = (props) => (
 
     <Provider store={store}>
-        <Title></Title>
-        <div>
+            <div>
             <SignUp />
         </div>
     </Provider>
