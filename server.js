@@ -13,6 +13,7 @@ app.prepare()
 
   server.use('/routing', routing);
   server.use('/db', db);
+  server.options('*', cors())
 
 
 
