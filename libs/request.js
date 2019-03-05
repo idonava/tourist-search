@@ -5,9 +5,9 @@ const API_HOST = "https://carlos-rails-api.herokuapp.com";
 const getUrl = endpoint => API_HOST + endpoint;
 
 export const post = async (endpoint, data) => {
-  console.log('hello from post ',`http://localhost:3100${endpoint}`)
+  console.log('hello from post ',`https://tourist-search.now.sh${endpoint}`)
   // const url = getUrl(endpoint);
-  return axios.post(`http://localhost:3100${endpoint}`, data, {
+  return axios.post(`https://tourist-search.now.sh${endpoint}`, data, {
     headers: { "Content-Type": "application/json" }
   });
 };
