@@ -6,7 +6,8 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "next start -p 8000",
-    "next": "next build && next start -p 8000"
+    "next": "next build && next start -p 8000",
+    "now-build": "next build"
   },
   "keywords": [],
   "author": "",
