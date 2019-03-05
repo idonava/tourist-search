@@ -70,7 +70,8 @@ const signup = (request, response, next) => {
             }
             else {
                 response.status(404).json(null);
-            }        })
+            }
+        })
         .catch((err) => console.error(err))
 
 }
@@ -110,25 +111,35 @@ const authenticate = (userReq) => {
             }
         })
 }
-const findByToken = (userReq) => {
-    return database.raw("SELECT * FROM users WHERE token = ?", [userReq.token])
+const findByToken = (token) => {
+    console.log('findByToken', token)
+    return database.raw("SELECT * FROM users WHERE token = ?", [token])
         .then((data) => data.rows[0])
 }
+const findHistoryById =  (userReq) => {
+    return database.raw("SELECT * FROM searches WHERE id = ?", [userReq])
+    .then((data) => data.rows)
 
+}
+const deleteHistoryById = (userReq) => {
+    return database.raw("DELETE FROM searches WHERE id = ?", [userReq])
+    .then((data) => data.rows[0])
+}
 const addSearch = (request, response, next) => {
-    console.log('addSearch',request.body)
+    console.log('addSearch', request.body)
     //const id = request.body.user.id
     const search_term = request.body.text
     if (validString(search_term)) {
-        addSearchToDb("9", search_term)
+        const totalResults = request.body.totalResults
+        addSearchToDb("9", search_term, totalResults)
             .then((res) => {
-                
-            if (res) {
-                response.status(201).json(search_term)
-            }
-            else {
-                response.status(404).json(null);
-            }
+
+                if (res) {
+                    response.status(201).json(search_term)
+                }
+                else {
+                    response.status(404).json(null);
+                }
 
             }
             ).catch((err) => console.error(err))
@@ -136,7 +147,7 @@ const addSearch = (request, response, next) => {
     else {
         next(new Error('Invalid search term'))
     }
-
+    console.log('finished')
 }
 validString = (str) => {
     return typeof str == 'string' &&
@@ -150,18 +161,24 @@ const addSearchToDb = (id, search_term) => {
     )
         .then((data) => data.rows[0])
 }
-
+// const addSearchToDb = (id, search_term, totalResults) => {
+//     return database.raw(
+//         "INSERT INTO searches (id, search_term, service, time, num_of_results) VALUES (?, ?, ?, ?,?) RETURNING id, time",
+//         [id, search_term, 'flickr', new Date(), totalResults]
+//     )
+//         .then((data) => data.rows[0])
+// }
 const getUserByToken = (request, response) => {
     console.log('1')
     const userTokenReq = request.body
     let user
 
-    findByToken(userTokenReq)
+    findByToken(userTokenReq.token)
         .then(foundUser => {
             user = foundUser
         })
         .then(() => {
-            console.log('usertoken',user)
+            // console.log('usertoken', user)
 
             if (user) {
                 delete user.password
@@ -174,8 +191,56 @@ const getUserByToken = (request, response) => {
         })
         .catch((err) => console.error(err))
 }
+
+const  getUserHistoryByToken = (request, response) => {
+    const userTokenReq = request.body
+    let user
+    findByToken(userTokenReq.token)
+        .then(foundUser => {
+            user = foundUser
+        })
+        .then(() => {
+            if (user) {
+
+                 findHistoryById('' + user.id)
+                    .then((history) => {
+                        response.status(201).json(history);
+                    })
+            }
+            else {
+                console.log('user doesnt found in db, id:', userTokenReq);
+                response.status(404).json(null);
+            }
+        })
+        .catch((err) => console.error(err))
+        console.log('finished')
+
+}
+const deleteUserHistoryByToken = (request, response) => {
+    const userTokenReq = request.body
+    let user
+    findByToken(userTokenReq.token)
+        .then(foundUser => {
+            user = foundUser
+        })
+        .then(() => {
+            if (user) {
+                console.log('user', user)
+
+                deleteHistoryById('' + user.id)
+                    .then((history) => {
+                        response.status(201).json(history)
+                    })
+            }
+            else {
+                console.log('user doesnt found in db, id:', userTokenReq);
+                response.status(404).json(null);
+            }
+        })
+        .catch((err) => console.error(err))
+}
 // don't forget to export!
 module.exports = {
-    signup, signin, addSearch, getUserByToken
+    signup, signin, addSearch, getUserByToken, getUserHistoryByToken, deleteUserHistoryByToken
 }
 

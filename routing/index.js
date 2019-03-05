@@ -13,8 +13,10 @@ router.get('/', (req, res) => {
 });
 router.post('/auth/signup', User.signup);
 router.post('/auth/signin', User.signin)
-router.post('/addsearch', User.addSearch)
-router.post('/getuser', User.getUserByToken)
+router.post('/add-search', User.addSearch)
+router.post('/get-user', User.getUserByToken)
+router.post('/user-history', User.getUserHistoryByToken)
+router.post('/delete-user-history', User.deleteUserHistoryByToken)
 
 
 // router.post('/signup', (req, res, next) => {

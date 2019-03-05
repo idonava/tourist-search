@@ -1,36 +1,45 @@
-import FlickrLayout from '../layouts/FlickrLayout'
+// import FlickrLayout from '../layouts/FlickrLayout'
 import React, { Component } from "react";
 import { redirectIfNotAuthenticated, isAuthenticated, getToken } from "../libs/auth";
 import Title from '../components/Title'
 import { getUser } from '../libs/user'
+import Search from '../components/Search'
+import Gallery from '../components/Gallery'
+import Detail from '../components/Detail'
+import configureStore from '../config/store'
+import { Provider } from 'react-redux';
+
+
+
 
 export default class Flickr extends Component {
     static async getInitialProps(ctx) {
         if (redirectIfNotAuthenticated(ctx)) {
             return {};
         }
-        //console.log('1')
-        const token =  getToken(ctx)
-        //console.log('2')
+        const token = getToken(ctx)
         const res = await getUser(token)
-        
-        //console.log('res user', res)
-        //console.log('res token', res.token)
         return {
-            user: res,
+            userToken: res.data.token,
             authenticated: isAuthenticated(ctx)
         };
     }
 
     render() {
-        const { authenticated, url, user } = this.props;
-        console.log(user)
+        const { authenticated, url, userToken } = this.props;
+        console.log(userToken)
+        const store = configureStore(userToken);
         return (
-            <div>
-                <Title authenticated={authenticated} pathname={url.pathname}></Title>
-                <h5>aaa{user}</h5>
-                <FlickrLayout />
-            </div>
+            <Provider store={store}>
+                <div>
+                    <Title authenticated={authenticated} pathname={url.pathname}></Title>
+                    {/* <h5>aaa{user}</h5> */}
+                    <Search userToken={userToken}/>
+                    <Gallery />
+                    <Detail />
+                </div>
+            </Provider>
+
         )
     }
 

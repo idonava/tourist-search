@@ -25,10 +25,10 @@ export const signIn = async (state) => {
 export const signUp = async (state) => {
     const res = await createUser(state);
     if (!res.data.token) {
-        console.log('res',res)
+        // console.log('res',res)
         return res;
     }
-    console.log('res',res.data)
+    // console.log('res',res.data)
     setCookie("token", res.data.token);
     redirect("/flickr");
     return null;

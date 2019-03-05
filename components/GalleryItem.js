@@ -31,4 +31,4 @@ GalleryItem.propTypes = {
   setIdDetail: PropTypes.func.isRequired,
 };
 
-export default GalleryItem;
+  export default GalleryItem;

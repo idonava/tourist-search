@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { getCookie, removeCookie } from "../libs/session";
 import { signIn, redirectIfAuthenticated } from "../libs/auth";
 import App from "../components/App";
+import '../node_modules/materialize-css/dist/css/materialize.min.css';
+import '../components/css/SignIn.css'
 
 import Title from '../components/Title'
 const emailRegex = RegExp(
@@ -54,23 +56,22 @@ export default class SignIn extends Component {
             <App>
                 <Title authenticated={false} pathname={url.pathname}></Title>
 
-                <div className="wrapper">
+                <div className="wrapper SignIn-page-content">
                     <div className="form-wrapper">
                         <h1>Login to Account</h1>
                         <form onSubmit={this.handleSubmit} noValidate>
                             <div className="email">
                                 <label htmlFor="email">Email</label>
-                                <input type="email" className={formErrors.email.length > 0 ? "error" : null} placeholder="Email" name="email" noValidate onChange={this.handleChange} />
+                                <input type="email" className={formErrors.email.length > 0 ? "error Text-box" : "Text-box"} placeholder="Email" name="email" noValidate onChange={this.handleChange} />
                                 {formErrors.email.length > 0 && (<span className="errorMessage">{formErrors.email}</span>)}
                             </div>
                             <div className="password">
                                 <label htmlFor="password">Password</label>
-                                <input type="password" className={formErrors.password.length > 0 ? "error" : null} placeholder="Password" name="password" noValidate onChange={this.handleChange} />
+                                <input type="password" className={formErrors.password.length > 0 ? "error Text-box" : " Text-box"} placeholder="Password" name="password" noValidate onChange={this.handleChange} />
                                 {formErrors.password.length > 0 && (<span className="errorMessage">{formErrors.password}</span>)}
                             </div>
                             <div className="createAccount">
-                                <button type="submit">Login to Account</button>
-                                <small>Do not have an account?</small>
+                                <button className="waves-effect waves-light btn" type="submit">Login to Account</button>
                             </div>
                         </form>
                     </div>

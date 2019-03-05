@@ -2,8 +2,7 @@ import { combineReducers } from 'redux';
 
 import detail, * as fromDetail from './detail';
 import search, * as fromSearch from './search';
-
-const rootReducer = combineReducers({ detail, search });
+const rootReducer = combineReducers({ detail, search , userToken});
 
 // Selectors of detail reducer
 export const getDetailId = state => fromDetail.getDetailId(state.detail);
@@ -21,5 +20,9 @@ export const getSearchNumberOfPages = state =>
   fromSearch.getSearchNumberOfPages(state.search);
 export const getSearchLargePhotos = state =>
   fromSearch.getSearchLargePhotos(state.search);
+export const getTotalResults = state =>
+  fromSearch.getTotalResults(state.search);
+export const userToken = state =>
+  (state.userToken);
 
 export default rootReducer;

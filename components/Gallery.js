@@ -12,12 +12,17 @@ import {
   getSearchIsLoading,
   getSearchPhotos,
   getSearchStat,
+  getTotalResults
 } from '../reducers';
 
 class Gallery extends PureComponent {
   getGalleryItems = () => {
-    const { photos, setIdDetail } = this.props;
+    const { photos, setIdDetail,totalResults } = this.props;
     if (!photos && !photos.lenght) return null;
+
+    
+    console.log('totalResults',totalResults)
+    console.log('photos',photos)
     return photos.map(item => {
       const { id, title, url_q } = item;
       return (
@@ -54,6 +59,7 @@ const mapStateToProps = state => {
     isLoading: getSearchIsLoading(state),
     photos: getSearchPhotos(state),
     stat: getSearchStat(state),
+    totalResults: getTotalResults(state)
   };
 };
 

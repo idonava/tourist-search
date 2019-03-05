@@ -57,7 +57,10 @@ export const getSearchNumberOfPages = state => {
   if (!state.photos) return null;
   return state.photos.pages;
 };
-
+export const getTotalResults = state => {
+  if (!state || !state.photos) return null;
+  return state.photos.total;
+};
 export const getSearchLargePhotos = state => {
   if (!state.photos || !state.photos.photo) return [];
   return state.photos.photo.map(item => {

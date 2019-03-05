@@ -9,7 +9,7 @@
 .Search-input {
   display: inline-block;
   height: 100%;
-  width: calc(100% - 130px);
+  width: calc(100% - 220px);
   margin: 5px;
 }
 
@@ -25,5 +25,13 @@
   width: 105px;
   margin: 5px;
   font-size: medium;
+  font-weight: 500;
+}
+
+.History-button {
+  height: 25px;
+  width: 75px;
+  margin: 5px;
+  font-size: small;
   font-weight: 500;
 }
