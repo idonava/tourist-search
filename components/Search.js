@@ -6,8 +6,6 @@ import Popup from "reactjs-popup";
 import Table from '../components/Table'
 import './css/Search.css';
 import { fetchSearch } from '../actions';
-import { redirectIfNotAuthenticated, isAuthenticated, getToken } from "../libs/auth";
-import { getUser } from '../libs/user'
 import { getTotalResults } from '../reducers';
 
 class Search extends PureComponent {
@@ -27,14 +25,12 @@ class Search extends PureComponent {
   handleButton = () => {
     const { userToken } = this.props;
     const { fetchSearch } = this.props;
-    const { text, totalResults } = this.state;
-    console.log('userrrrrrrr', userToken)
+    const { text } = this.state;
     if (this.validString(text)) {
-      const ans = fetchSearch(text);
-      console.log('ans', ans)
-      console.log('totalResults', totalResults)
-
+      fetchSearch(text);
+      const {totalResults} = this.state;
       addSearchToUser(userToken, text, totalResults);
+      
     }
     else {
       console.log('Invalid search term')
@@ -51,7 +47,6 @@ class Search extends PureComponent {
     }
   };
   searchRowClick = (row) => {
-    console.log('row in search', row);
     this.state.text = row.search_term;
     this.handleInput(row.search_term)
 

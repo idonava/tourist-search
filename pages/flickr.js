@@ -17,8 +17,8 @@ export default class Flickr extends Component {
         if (redirectIfNotAuthenticated(ctx)) {
             return {};
         }
-        const token = getToken(ctx)
-        const res = await getUser(token)
+        const token = await getToken(ctx)
+        const res =  await getUser(token)
         return {
             userToken: res.data.token,
             authenticated: isAuthenticated(ctx)

@@ -3,6 +3,7 @@ import { Component } from "react";
 import { isAuthenticated } from "../libs/auth";
 import Title from '../components/Title'
 import PropTypes from "prop-types";
+import redirect from "../libs/redirect";
 
 export default class Index extends Component {
   static propTypes = {

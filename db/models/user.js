@@ -30,9 +30,9 @@ const signin = (request, response) => {
         .catch((err) => console.error(err)
         )
 }
-const findUserByEmail = (userReq) => {
-    return database.raw("SELECT * FROM users WHERE email = ?", [userReq.email])
-        .then((data) => data.rows[0])
+const findUserByEmail = async (userReq) => {
+    const data = await database.raw("SELECT * FROM users WHERE email = ?", [userReq.email]);
+    return data.rows[0];
 }
 const checkPassword = (reqPassword, foundUser) => {
     return new Promise((resolve, reject) =>
@@ -49,9 +49,9 @@ const checkPassword = (reqPassword, foundUser) => {
     )
 
 }
-const updateUserToken = (token, user) => {
-    return database.raw("UPDATE users SET token = ? WHERE id = ? RETURNING id, email, token", [token, user.id])
-        .then((data) => data.rows[0])
+const updateUserToken = async (token, user) => {
+    const data = await database.raw("UPDATE users SET token = ? WHERE id = ? RETURNING id, email, token", [token, user.id]);
+    return data.rows[0];
 }
 const signup = (request, response, next) => {
     const user = request.body
@@ -85,12 +85,9 @@ const hashPassword = (password) => {
     )
 }
 // user will be saved to db - we're explicitly asking postgres to return back helpful info from the row created
-const createUser = (user) => {
-    return database.raw(
-        "INSERT INTO users (email, password, token, created_at) VALUES (?, ?, ?, ?) RETURNING id, email, created_at, token",
-        [user.email, user.password, user.token, new Date()]
-    )
-        .then((data) => data.rows[0])
+const createUser = async (user) => {
+    const data = await database.raw("INSERT INTO users (email, password, token, created_at) VALUES (?, ?, ?, ?) RETURNING id, email, created_at, token", [user.email, user.password, user.token, new Date()]);
+    return data.rows[0];
 }
 // crypto ships with node - we're leveraging it to create a random, secure token
 const createToken = () => {
@@ -100,66 +97,54 @@ const createToken = () => {
         })
     })
 }
-
-const authenticate = (userReq) => {
-    findByToken(userReq.token)
-        .then((user) => {
-            if (user.username == userReq.username) {
-                return true
-            } else {
-                return false
-            }
-        })
+const findByToken = async (token) => {
+    const data = await database.raw("SELECT * FROM users WHERE token = ?", [token]);
+    return data.rows[0];
 }
-const findByToken = (token) => {
-    console.log('findByToken', token)
-    return database.raw("SELECT * FROM users WHERE token = ?", [token])
-        .then((data) => data.rows[0])
-}
-const findHistoryById =  (userReq) => {
-    return database.raw("SELECT * FROM searches WHERE id = ?", [userReq])
-    .then((data) => data.rows)
+const findHistoryById = async (userReq) => {
+    const data = await database.raw("SELECT * FROM searches WHERE id = ?", [userReq]);
+    console.log('"SELECT * FROM searches WHERE id =', userReq)
+    return data.rows;
 
 }
-const deleteHistoryById = (userReq) => {
-    return database.raw("DELETE FROM searches WHERE id = ?", [userReq])
-    .then((data) => data.rows[0])
-}
-const addSearch = (request, response, next) => {
-    console.log('addSearch', request.body)
-    //const id = request.body.user.id
-    const search_term = request.body.text
-    if (validString(search_term)) {
-        const totalResults = request.body.totalResults
-        addSearchToDb("9", search_term, totalResults)
-            .then((res) => {
-
-                if (res) {
-                    response.status(201).json(search_term)
-                }
-                else {
-                    response.status(404).json(null);
-                }
-
-            }
-            ).catch((err) => console.error(err))
-    }
-    else {
-        next(new Error('Invalid search term'))
-    }
-    console.log('finished')
+const deleteHistoryById = async (userReq) => {
+    const data = await database.raw("DELETE FROM searches WHERE id = ?", [userReq]);
+    return data.rows[0];
 }
 validString = (str) => {
     return typeof str == 'string' &&
         str.trim() != '';
 }
+const addSearch = (request, response) => {
+    const userToken = request.body.token
+    const userSearchTerm = request.body.text
+    const userTotalResults = request.body.totalResults
+    console.log('addSearch',userToken,userSearchTerm,userTotalResults)
+    let user
+    findByToken(userToken)
+        .then(foundUser => {
+            user = foundUser
+        })
+        .then(() => {
+            if (user) {
+                addSearchToDb(''+user.id, userSearchTerm, userTotalResults)
+                    .then((history) => {
+                        response.status(201).json(history);
+                    })
+            }
+            else {
+                console.log('cannot add search to db');
+                response.status(404).json(null);
+            }
+        })
+        .catch((err) => console.error(err))
 
-const addSearchToDb = (id, search_term) => {
-    return database.raw(
-        "INSERT INTO searches (id, search_term, service, time) VALUES (?, ?, ?, ?) RETURNING id, id, time",
-        [id, search_term, 'flickr', new Date()]
-    )
-        .then((data) => data.rows[0])
+}
+
+
+const addSearchToDb = async (id, search_term) => {
+    const data = await database.raw("INSERT INTO searches (id, search_term, service, time) VALUES (?, ?, ?, ?) RETURNING id, id, time", [id, search_term, 'flickr', new Date()]);
+    return data.rows[0];
 }
 // const addSearchToDb = (id, search_term, totalResults) => {
 //     return database.raw(
@@ -169,17 +154,13 @@ const addSearchToDb = (id, search_term) => {
 //         .then((data) => data.rows[0])
 // }
 const getUserByToken = (request, response) => {
-    console.log('1')
     const userTokenReq = request.body
     let user
-
     findByToken(userTokenReq.token)
         .then(foundUser => {
             user = foundUser
         })
         .then(() => {
-            // console.log('usertoken', user)
-
             if (user) {
                 delete user.password
                 response.status(201).json(user)
@@ -192,7 +173,7 @@ const getUserByToken = (request, response) => {
         .catch((err) => console.error(err))
 }
 
-const  getUserHistoryByToken = (request, response) => {
+const getUserHistoryByToken = (request, response) => {
     const userTokenReq = request.body
     let user
     findByToken(userTokenReq.token)
@@ -201,8 +182,7 @@ const  getUserHistoryByToken = (request, response) => {
         })
         .then(() => {
             if (user) {
-
-                 findHistoryById('' + user.id)
+                findHistoryById('' + user.id)
                     .then((history) => {
                         response.status(201).json(history);
                     })
@@ -213,7 +193,6 @@ const  getUserHistoryByToken = (request, response) => {
             }
         })
         .catch((err) => console.error(err))
-        console.log('finished')
 
 }
 const deleteUserHistoryByToken = (request, response) => {
@@ -225,8 +204,6 @@ const deleteUserHistoryByToken = (request, response) => {
         })
         .then(() => {
             if (user) {
-                console.log('user', user)
-
                 deleteHistoryById('' + user.id)
                     .then((history) => {
                         response.status(201).json(history)

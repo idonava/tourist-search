@@ -15,30 +15,25 @@ class Table extends Component {
     constructor(props) {
         super();
 
-        console.log('This happens 1st.');
 
         this.state = {
-            loading: 'initial',
             data: '',
         };
 
     }
-    
+
     async  loadData() {
         const { userToken } = this.props;
         return await getUserHistory(userToken)
     }
     componentDidMount() {
 
-        console.log('This happens 3rd.');
 
         this.setState({ loading: 'true' });
         this.loadData()
             .then((data) => {
-                console.log('This happens 7th.');
                 this.setState({
                     data: data,
-                    loading: 'false'
                 });
             });
     }
@@ -46,14 +41,12 @@ class Table extends Component {
 
     render() {
         const { onRowClick } = this.props;
-        // console.log('history',history)
 
         var options = {
             onRowClick: function (row) {
                 // call callback function with data on the search
                 onRowClick(row)
                 /// close the popup
-                console.log(row)
             }
         }
 

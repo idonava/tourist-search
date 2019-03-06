@@ -4,6 +4,7 @@ import { signIn, redirectIfAuthenticated } from "../libs/auth";
 import App from "../components/App";
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import '../components/css/SignIn.css'
+import redirect from "../libs/redirect";
 
 import Title from '../components/Title'
 const emailRegex = RegExp(
@@ -38,7 +39,7 @@ export default class SignIn extends Component {
     }
     static async getInitialProps(ctx) {
         if (redirectIfAuthenticated(ctx)) {
-            return {};
+            redirect("/flickr");
         }
         const success = getCookie("success", ctx.req);
         if (success) {

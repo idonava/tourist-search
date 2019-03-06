@@ -38,6 +38,7 @@ export const redirectIfAuthenticated = ctx => {
         redirect("/flickr", ctx);
         return true;
     }
+    
     return false;
 };
 
