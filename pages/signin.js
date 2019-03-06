@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { getCookie, removeCookie } from "../libs/session";
 import { signIn, redirectIfAuthenticated } from "../libs/auth";
 import App from "../components/App";
-import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import '../components/css/Sign.css'
 import redirect from "../libs/redirect";
 

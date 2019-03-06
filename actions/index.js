@@ -71,6 +71,7 @@ export const doFetch = (type, url, meta = {}) => {
           meta,
         },
       });
+      return response;
     };
 
     //The error function

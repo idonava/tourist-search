@@ -142,18 +142,10 @@ const addSearch = (request, response) => {
 
 }
 
-
-const addSearchToDb = async (id, search_term) => {
-    const data = await database.raw("INSERT INTO searches (id, search_term, service, time) VALUES (?, ?, ?, ?) RETURNING id, id, time", [id, search_term, 'flickr', new Date()]);
+const addSearchToDb = async (id, search_term,userTotalResults) => {
+    const data = await database.raw("INSERT INTO searches (id, search_term, service, time,num_of_results) VALUES (?, ?, ?, ?,?) RETURNING id, id, time", [id, search_term, 'flickr', new Date(),userTotalResults]);
     return data.rows[0];
 }
-// const addSearchToDb = (id, search_term, totalResults) => {
-//     return database.raw(
-//         "INSERT INTO searches (id, search_term, service, time, num_of_results) VALUES (?, ?, ?, ?,?) RETURNING id, time",
-//         [id, search_term, 'flickr', new Date(), totalResults]
-//     )
-//         .then((data) => data.rows[0])
-// }
 const getUserByToken = (request, response) => {
     const userTokenReq = request.body
     let user

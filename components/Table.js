@@ -5,7 +5,7 @@ import { getToken, redirectIfNotAuthenticated, isAuthenticated } from '../libs/a
 import './css/Search.css';
 import App from './App'
 import { deleteUserHistory, getUserHistory } from '../services/userApi';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'   ;
 var ReactBsTable = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
@@ -40,8 +40,7 @@ class Table extends Component {
 
 
     render() {
-        const { onRowClick } = this.props;
-
+        const { onRowClick   } = this.props;
         var options = {
             onRowClick: function (row) {
                 // call callback function with data on the search
@@ -52,14 +51,7 @@ class Table extends Component {
 
         return (
             <App>
-                <button
-                    type="button"
-                    className="History-button"
-                    onClick={this.hdandleRow}
-                >
-                    <span>Clear </span>
-                </button>
-                <BootstrapTable data={this.state.data.data} options={options}>
+                <BootstrapTable className="table-wrapper-scroll-y" data={this.state.data.data} options={options}>
                     <TableHeaderColumn dataField='search_term' isKey>Search term</TableHeaderColumn>
                     <TableHeaderColumn dataField='service'>Service</TableHeaderColumn>
                     <TableHeaderColumn dataField='time'>Time</TableHeaderColumn>
@@ -68,11 +60,7 @@ class Table extends Component {
             </App>
         );
     }
-    hdandleRow = () => {
-        const { userToken } = this.props;
-        deleteUserHistory(userToken);
-        close()
-    };
+
 
 }
 

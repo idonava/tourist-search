@@ -1,3 +1,5 @@
+import '../node_modules/materialize-css/dist/css/materialize.min.css';
+
 import { Component } from "react";
   import Link from 'next/link'
 import { isAuthenticated } from "../libs/auth";
