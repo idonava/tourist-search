@@ -94,11 +94,10 @@ export default class SignIn extends Component {
             default:
                 break;
         }
-        this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+        this.setState({ formErrors, [name]: value });
     }
     handleSubmit = async e => {
         e.preventDefault();
-        //console.log('signin state',this.state)
         if (formValid(this.state)) {
             const error = await signIn(this.state);
             if (error) {

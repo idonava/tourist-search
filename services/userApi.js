@@ -5,7 +5,7 @@ export const addSearchToUser = async (token,text,totalResults) => {
         return response;
     } catch (error) {
         return error.response && error.response.status === 422
-            ? "Adding doesnt successed."
+            ? "Adding doesn't successed."
             : "Unknown error. Please try again";
     }
 }
@@ -23,34 +23,27 @@ export const createUser = async (state) => {
 export const getCurrentUser = async (token) => {
     try {
         const res = await post("/routing/get-user", JSON.stringify({token}))
-
         return res;
-
     } catch (error) {
         return error.response && error.response.status === 404
-            ? "User not found"
+            ? "User doesn't found"
             : "Unknown error. Please try again";
     }
 };
-
 export const getUserHistory = async (token) => {
     try {
         const res = await post("/routing/user-history", JSON.stringify({token}))
         return res;
-
     } catch (error) {
         return error.response && error.response.status === 404
-            ? "User history not found"
+            ? "Deleting history failed."
             : "Unknown error. Please try again";
     }
 };
 export const deleteUserHistory = async (token) => {
     try {
-
         const res = await post("/routing/delete-user-history", JSON.stringify({token}))
-
         return res;
-
     } catch (error) {
         return error.response && error.response.status === 404
             ? "User history not found"

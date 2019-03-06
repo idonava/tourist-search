@@ -18,19 +18,4 @@ router.post('/get-user', User.getUserByToken)
 router.post('/user-history', User.getUserHistoryByToken)
 router.post('/delete-user-history', User.deleteUserHistoryByToken)
 
-
-// router.post('/signup', (req, res, next) => {
-//     //console.log(req.body);
-//     if (validUser(req.body)) {
-//         res.json({
-//             message: 'Valid user - Needs to check in db for duplicate'
-//         });
-//     }
-//     else {
-//         next(new Error('Invalid user'))
-//     }
-// });
-
-
-
 module.exports = router;

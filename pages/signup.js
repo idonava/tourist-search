@@ -3,7 +3,7 @@ import App from "../components/App";
 import Title from '../components/Title'
 import { signUp, redirectIfAuthenticated } from "../libs/auth";
 const emailRegex = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 );
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
@@ -18,7 +18,6 @@ const formValid = ({ formErrors, ...rest }) => {
 
     return valid;
 };
-
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -100,9 +99,7 @@ export default class SignUp extends Component {
           default:
             break;
         }
-        this.setState({ formErrors, [name]: value }, () =>
-         console.log(this.state));
-      }
+        this.setState({ formErrors, [name]: value } )}
       handleSubmit =async e => {
         e.preventDefault();
     

@@ -61,10 +61,6 @@ export const getTotalResults = state => {
   if (!state || !state.photos) return null;
   return state.photos.total;
 };
-export const getUserToken = state => {
-  if (!state) return null;
-  return state.userToken;
-};
 export const getSearchLargePhotos = state => {
   if (!state.photos || !state.photos.photo) return [];
   return state.photos.photo.map(item => {

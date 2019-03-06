@@ -10,6 +10,7 @@ const signin = (request, response) => {
     findUserByEmail(userReq)
         .then(foundUser => {
             user = foundUser
+            console.log(user)
             return checkPassword(userReq.password, foundUser)
         })
         .then((res) => createToken())
@@ -98,13 +99,11 @@ const createToken = () => {
     })
 }
 const findByToken = async (token) => {
-    console.log('check',await database.raw("SELECT * FROM users"))
     const data = await database.raw("SELECT * FROM users WHERE token = ?", [token]);
     return data.rows[0];
 }
 const findHistoryById = async (userReq) => {
     const data = await database.raw("SELECT * FROM searches WHERE id = ?", [userReq]);
-    console.log('"SELECT * FROM searches WHERE id =', userReq)
     return data.rows;
 
 }
@@ -120,7 +119,6 @@ const addSearch = (request, response) => {
     const userToken = request.body.token
     const userSearchTerm = request.body.text
     const userTotalResults = request.body.totalResults
-    console.log('addSearch',userToken,userSearchTerm,userTotalResults)
     let user
     findByToken(userToken)
         .then(foundUser => {
@@ -134,7 +132,6 @@ const addSearch = (request, response) => {
                     })
             }
             else {
-                console.log('cannot add search to db');
                 response.status(404).json(null);
             }
         })
@@ -149,28 +146,21 @@ const addSearchToDb = async (id, search_term,userTotalResults) => {
 const getUserByToken = (request, response) => {
     const userTokenReq = request.body
     let user
-    console.log('1',userTokenReq.token)
     findByToken(userTokenReq.token)
         .then(foundUser => {
             user = foundUser
-            console.log('2',user)
         })
         .then(() => {
             if (user) {
                 delete user.password
-                console.log('3',user)
                 response.status(201).json(user)
             }
             else {
-                console.log('4',userTokenReq)
-                console.log('token doesnt found in db, id:', userTokenReq);
                 response.status(404).json(null);
             }
-            console.log('5',user)
 
         })
         .catch((err) => console.error(err))
-        console.log('6')
 
 }
 
@@ -189,7 +179,6 @@ const getUserHistoryByToken = (request, response) => {
                     })
             }
             else {
-                console.log('user doesnt found in db, id:', userTokenReq);
                 response.status(404).json(null);
             }
         })
@@ -211,7 +200,6 @@ const deleteUserHistoryByToken = (request, response) => {
                     })
             }
             else {
-                console.log('user doesnt found in db, id:', userTokenReq);
                 response.status(404).json(null);
             }
         })

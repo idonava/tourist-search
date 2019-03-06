@@ -9,9 +9,6 @@ import Detail from '../components/Detail'
 import configureStore from '../config/store'
 import { Provider } from 'react-redux';
 
-
-
-
 export default class Flickr extends Component {
     static async getInitialProps(ctx) {
         if (redirectIfNotAuthenticated(ctx)) {
@@ -24,7 +21,6 @@ export default class Flickr extends Component {
             authenticated: isAuthenticated(ctx)
         };
     }
-
     render() {
         const { authenticated, url, userToken } = this.props;
         const store = configureStore(userToken);
@@ -42,5 +38,4 @@ export default class Flickr extends Component {
 
         )
     }
-
 }

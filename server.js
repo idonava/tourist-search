@@ -26,7 +26,6 @@ app.prepare()
 
   server.listen(3100, (err) => {
     if (err) throw err
-    //console.log('> Ready on http://localhost:3100')
   })
   
 })

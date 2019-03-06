@@ -2,39 +2,21 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addSearchToUser, deleteUserHistory } from "../services/userApi";
-import Popup from "reactjs-popup";
 import Table from '../components/Table'
 import './css/Search.css';
 import { fetchSearch } from '../actions';
-import { getTotalResults } from '../reducers';
 import Modal from 'react-modal';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
 
 class Search extends PureComponent {
-
   constructor(props) {
     super(props);
     this.state = { text: '', modalIsOpen: false };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
-
-
   openModal() {
     this.setState({ modalIsOpen: true });
   }
-
   closeModal() {
     this.setState({ modalIsOpen: false });
   }
@@ -51,18 +33,14 @@ class Search extends PureComponent {
     const { text } = this.state;
     if (this.validString(text)) {
       fetchSearch(text).then(response => {
-        const numOfResults = response.data.photos.total;
-        console.log('numOfResults',numOfResults);
-        addSearchToUser(userToken, text, numOfResults);
+        const totalResults = response.data.photos.total;
+        addSearchToUser(userToken, text, totalResults);
       });
     }
     else {
       console.log('Invalid search term')
     }
-
-
   };
-
   handleKeyPressed = event => {
     var code = event.keyCode || event.which;
     if (code === 13) {
@@ -80,12 +58,13 @@ class Search extends PureComponent {
     deleteUserHistory(this.props.userToken);
     this.closeModal()
   }
+  componentWillMount() {
+    Modal.setAppElement('body');
+}
   render() {
-
-    const { text, totalResults } = this.state;
+    const { text } = this.state;
     const { userToken } = this.props;
     return (
-
       <div>
         <div className="Search" style={{ display: 'flex' }}>
           <div className="Search-input">
@@ -124,32 +103,12 @@ class Search extends PureComponent {
               </Modal>
             </div>
           </div>
-
-
         </div>
       </div>
-
-
-
     );
   }
 }
-
-
 Search.propTypes = {
   fetchSearch: PropTypes.func.isRequired,
-  totalResults: PropTypes.func.isRequired
 };
-
-const mapStateToProps = state => {
-  return {
-    totalResults: getTotalResults(state)
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchSearch },
-
-
-)(Search);
+export default connect(null, { fetchSearch })(Search);

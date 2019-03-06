@@ -11,7 +11,6 @@ const cookie =  getCookie("token", ctx.req);
 export const isAuthenticated = ctx => !!getToken(ctx);
 
 export const signIn = async (state) => {
-    //console.log('auth',state)
     const res = await authenticate(state);
     if (!res.token) {
         return res;
@@ -24,10 +23,8 @@ export const signIn = async (state) => {
 export const signUp = async (state) => {
     const res = await createUser(state);
     if (!res.data.token) {
-        // console.log('res',res)
         return res;
     }
-    // console.log('res',res.data)
     setCookie("token", res.data.token);
     redirect("/flickr");
     return null;
