@@ -1,6 +1,5 @@
 import { post, get } from "../libs/request";
 export const addSearchToUser = async (token,text,totalResults) => {
-    console.log('addSearch',token,text,totalResults)
     try {
         const response = await post("/routing/add-search", JSON.stringify({token,text,totalResults}));
         return response;
@@ -37,7 +36,6 @@ export const getCurrentUser = async (token) => {
 export const getUserHistory = async (token) => {
     try {
         const res = await post("/routing/user-history", JSON.stringify({token}))
-        console.log('res',res)
         return res;
 
     } catch (error) {

@@ -3,7 +3,7 @@ import { getCookie, removeCookie } from "../libs/session";
 import { signIn, redirectIfAuthenticated } from "../libs/auth";
 import App from "../components/App";
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
-import '../components/css/SignIn.css'
+import '../components/css/Sign.css'
 import redirect from "../libs/redirect";
 
 import Title from '../components/Title'
@@ -57,7 +57,7 @@ export default class SignIn extends Component {
             <App>
                 <Title authenticated={false} pathname={url.pathname}></Title>
 
-                <div className="wrapper SignIn-page-content">
+                <div className="wrapper Sign-page-content">
                     <div className="form-wrapper">
                         <h1>Login to Account</h1>
                         <form onSubmit={this.handleSubmit} noValidate>
@@ -72,7 +72,7 @@ export default class SignIn extends Component {
                                 {formErrors.password.length > 0 && (<span className="errorMessage">{formErrors.password}</span>)}
                             </div>
                             <div className="createAccount">
-                                <button className="waves-effect waves-light btn" type="submit">Login to Account</button>
+                                <button className="waves-effect grey darken-2 btn" type="submit">Login to Account</button>
                             </div>
                         </form>
                     </div>

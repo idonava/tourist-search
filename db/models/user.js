@@ -98,6 +98,7 @@ const createToken = () => {
     })
 }
 const findByToken = async (token) => {
+    console.log('check',await database.raw("SELECT * FROM users"))
     const data = await database.raw("SELECT * FROM users WHERE token = ?", [token]);
     return data.rows[0];
 }
@@ -156,21 +157,29 @@ const addSearchToDb = async (id, search_term) => {
 const getUserByToken = (request, response) => {
     const userTokenReq = request.body
     let user
+    console.log('1',userTokenReq.token)
     findByToken(userTokenReq.token)
         .then(foundUser => {
             user = foundUser
+            console.log('2',user)
         })
         .then(() => {
             if (user) {
                 delete user.password
+                console.log('3',user)
                 response.status(201).json(user)
             }
             else {
+                console.log('4',userTokenReq)
                 console.log('token doesnt found in db, id:', userTokenReq);
                 response.status(404).json(null);
             }
+            console.log('5',user)
+
         })
         .catch((err) => console.error(err))
+        console.log('6')
+
 }
 
 const getUserHistoryByToken = (request, response) => {

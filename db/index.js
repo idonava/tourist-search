@@ -15,7 +15,7 @@ client.connect(function (err) {
         return;
     }
 
-    //console.log('Connected to database.');
+    console.log('Connected to database.');
 });
 
 

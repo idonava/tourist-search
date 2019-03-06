@@ -12,14 +12,16 @@ export default class Index extends Component {
   static async getInitialProps(ctx) {
     return {
       authenticated: isAuthenticated(ctx)
+      
     };
+    
   }
   render() {
     const { authenticated, url } = this.props;
     return (
       <div>
         <Title authenticated={authenticated} pathname={url.pathname}></Title>
-        <h1>Users</h1>
+        <h1  style={{ display: 'flex', justifyContent: 'center' }}>Wellcome to Tourist Search Engine</h1>
       </div>
     )
   }

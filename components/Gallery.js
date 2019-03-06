@@ -22,7 +22,7 @@ class Gallery extends PureComponent {
 
     
     console.log('totalResults',totalResults)
-    console.log('photos',photos)
+    // console.log('photos',photos)
     return photos.map(item => {
       const { id, title, url_q } = item;
       return (

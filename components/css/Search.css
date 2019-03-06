@@ -9,7 +9,7 @@
 .Search-input {
   display: inline-block;
   height: 100%;
-  width: calc(100% - 220px);
+  width: calc(100%);
   margin: 5px;
 }
 

@@ -1,4 +1,4 @@
-.SignIn-page-content {
+.Sign-page-content {
     width: 50%;
     margin-left: 25%;
     text-align: center;
@@ -15,7 +15,7 @@
     display: relative;
 }
 
-.SignIn-button {
+.Sign-button {
     background-color: darkgray;
     border: none;
     margin-top: 2%;

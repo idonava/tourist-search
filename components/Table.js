@@ -70,9 +70,8 @@ class Table extends Component {
     }
     hdandleRow = () => {
         const { userToken } = this.props;
-        console.log('delete user history data', userToken)
         deleteUserHistory(userToken);
-
+        close()
     };
 
 }

@@ -47,7 +47,7 @@ export default class SignUp extends Component {
         return (
             <App>
                 <Title authenticated={false} pathname={url.pathname}></Title>
-                <div className="wrapper">
+                <div className="wrapper Sign-page-content">
                     <div className="form-wrapper">
                         <h1>Create Account</h1>
                         <form onSubmit={this.handleSubmit} noValidate>
@@ -72,8 +72,7 @@ export default class SignUp extends Component {
                                 {formErrors.password.length > 0 && (<span className="errorMessage">{formErrors.password}</span>)}
                             </div>
                             <div className="createAccount">
-                                <button type="submit">Create Account</button>
-                                <small>Already Have an Account?</small>
+                                <button className="waves-effect grey darken-2 btn" type="submit">Create Account</button>
                             </div>
                         </form>
                     </div>

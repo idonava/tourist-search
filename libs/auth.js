@@ -4,9 +4,8 @@ import { authenticate } from "../services/authApi";
 import { createUser } from "../services/userApi";
 
 export const getToken = ctx => {
-    // console.log('getTokener', ctx.req)
-
-    return getCookie("token", ctx.req);
+const cookie =  getCookie("token", ctx.req);
+    return cookie;
 };
 
 export const isAuthenticated = ctx => !!getToken(ctx);

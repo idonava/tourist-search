@@ -28,9 +28,9 @@ class Search extends PureComponent {
     const { text } = this.state;
     if (this.validString(text)) {
       fetchSearch(text);
-      const {totalResults} = this.state;
+      const { totalResults } = this.state;
       addSearchToUser(userToken, text, totalResults);
-      
+
     }
     else {
       console.log('Invalid search term')
@@ -57,28 +57,30 @@ class Search extends PureComponent {
     const { text, totalResults } = this.state;
     const { userToken } = this.props;
     return (
-      <div className="Search">
+      <div className="Search" style={{ display: 'flex' }}>
         <div className="Search-input">
           <input
             type="text"
-            className="Search-input-text"
+            className="input-field col s6"
             placeholder="Search for photos!"
             value={text}
             onChange={event => this.handleInput(event.target.value)}
             onKeyPress={this.handleKeyPressed}
           />
         </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button
+            type="button"
+            className="waves-effect grey darken-2 btn"
+            onClick={this.handleButton}
+          > <span>Search</span>
+          </button>
+          &nbsp;
+        <Popup trigger={<button className="waves-effect grey darken-2 btn-small"> History </button>} lockScroll modal closeOnDocumentClick>
+            <Table userToken={userToken} onRowClick={this.searchRowClick} />
+          </Popup>
+        </div>
 
-        <button
-          type="button"
-          className="Search-button"
-          onClick={this.handleButton}
-        >
-          <span>Search</span>
-        </button>
-        <Popup trigger={<button className="History-button"> History </button>} modal closeOnDocumentClick>
-          <Table userToken={userToken} onRowClick={this.searchRowClick} />
-        </Popup>
       </div>
     );
   }

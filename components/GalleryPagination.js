@@ -31,10 +31,12 @@ class GalleryPagination extends PureComponent {
     const { pageSelected, numberOfPages } = this.props;
     if (pageSelected === null || numberOfPages === null) return null;
     return (
-      <div className="GalleryPagination">
+      
+      <div className="GalleryPagination "style={{ display: 'flex', justifyContent: 'center' }} >
+      
         <button
           type="button"
-          className="GalleryPaginationButton"
+          className="waves-effect grey darken-2 btn-small"
           onClick={this.handlePreviousPage}
           disabled={!this.isPreviousPageAvailable()}
         >
@@ -45,7 +47,7 @@ class GalleryPagination extends PureComponent {
         </span>
         <button
           type="button"
-          className="GalleryPaginationButton"
+          className="waves-effect grey darken-2 btn-small"
           onClick={this.handleNextPage}
         >
           Next

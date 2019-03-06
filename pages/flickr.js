@@ -27,7 +27,6 @@ export default class Flickr extends Component {
 
     render() {
         const { authenticated, url, userToken } = this.props;
-        console.log(userToken)
         const store = configureStore(userToken);
         return (
             <Provider store={store}>
@@ -35,6 +34,7 @@ export default class Flickr extends Component {
                     <Title authenticated={authenticated} pathname={url.pathname}></Title>
                     {/* <h5>aaa{user}</h5> */}
                     <Search userToken={userToken}/>
+                    &nbsp;
                     <Gallery />
                     <Detail />
                 </div>
